@@ -1,0 +1,62 @@
+.mainContent {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.mainContent .main {
+  color: #fff;
+}
+.mainContent .home {
+  padding: 0px 16px;
+}
+.mainContent .home .header-box p {
+  padding: 40px 0px 50px 0;
+}
+.mainContent .home .header-box p span {
+  background: #f28503;
+  border-radius: 27px;
+  color: #ffffff;
+  padding: 15px;
+}
+.mainContent .home .card {
+  margin-bottom: 50px;
+  margin-right: 15px;
+  border-radius: 15px;
+  background: #18171f;
+  padding: 15px;
+}
+.mainContent .home .card .card-box {
+  background: #24222e;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0px 0px 10px 0px;
+  display: flex;
+}
+.mainContent .home .card .card-box img {
+  width: 30px;
+  height: 30px;
+}
+.mainContent .home .card .card-box p {
+  line-height: 30px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 15px;
+}
+.texthight {
+  line-height: 38px;
+}
+.textcenter {
+  text-align: center;
+}
+.card-shadow-origin {
+  box-shadow: 15px 15px 0px 0px #fbbf2d;
+}
+.card-shadow-gray {
+  box-shadow: 15px 15px 0px 0px #2e2d38;
+}
+.text-origin {
+  color: #f28503;
+}
+.ant-rate-star-zero {
+  color: #fff;
+}
