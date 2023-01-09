@@ -42,6 +42,7 @@ export default function Home({ }) {
 
     const [score, setScore] = useState<string>('0');
     const [maxScore, setMaxScore] = useState<string>('0');
+    const [selfScore, setSelfScore] = useState<string>('0');
     const [inviter, setInviter] = useState<string>('');
     const [isInviter, setIsInviter] = useState<boolean>(false);
     const [userAddr, setUserAddr] = useState<string>('');
@@ -112,6 +113,8 @@ export default function Home({ }) {
             setVipProfit(res.vipProfit.toString())
             faceContract?.users(res.maxScoreUser).then((ret: any) => {
                 setMaxScore(ret.score.toString())
+                setSelfScore(ret.selfScore.toString())
+
             }).catch((err: any) => {
                 console.log("getUsers maxScoreUser", err)
             })
@@ -275,7 +278,7 @@ export default function Home({ }) {
         <div className='mainContent'>
             <div className=" main">
                 <div className="home">
-                    <div className='card card-shadow-origin' style={{
+                    <div className='card card-shadow-gray' style={{
                         background: "#fff",
                         color: "#000",
                         marginTop: "20px"
@@ -474,7 +477,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(returnedAmount)} precision={2} />
+                                }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed())} precision={2} />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -484,7 +487,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(maxScore)} precision={2} />
+                                }} value={fromValue(new BigNumber(new BigNumber(maxScore).plus(selfScore).toString()).toFixed())} precision={2} />
                             </Col>
                             <Col flex={1}>
                                 <p>{t("Otherachievements")}</p>
@@ -492,12 +495,13 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(score).minus(maxScore).toFixed())} precision={2} />
+                                }}  value={fromValue(new BigNumber(score).toFixed())} precision={2} />
                             </Col>
                         </Row>
                     </div>
 
-                    <div className='card card-shadow-origin'>
+                    {/* <div className='card card-shadow-origin'> */}
+                    <div className='card card-shadow-gray'>
                         <Row>
                             <Col span={24} className='card-box'>
                                 <img src={iconRecharge} alt="" />
@@ -516,7 +520,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(returnedAmount)} precision={2} />
+                                }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed())} precision={2} />
 
                             </Col>
                         </Row>
@@ -543,7 +547,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(vipProfit)} precision={2} />
+                                }} value={fromValue(new BigNumber(vipProfit).plus(balance1).toFixed())} precision={2} />
                             </Col>
                         </Row>
                     </div>
