@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { isAddress, useERC20, useFace, usePool } from '../../hooks/useContract';
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from "ethers"
-import { Button, Col, Row, Statistic, Modal, Input, message, Rate } from 'antd';
+import { Col, Row, Statistic, Modal, message, Rate } from 'antd';
 import { formatString, fromValue, toValue, verify } from '../../utils/formatting';
 import BigNumber from "bignumber.js";
 import { MAX_UNIT256 } from '../../constants';
@@ -11,6 +11,7 @@ import { iconCode, iconRecharge, iconRecharge1, iconScanCode } from '../../image
 import QRCode from 'qrcode.react';
 import loadingStore from '../../state';
 import { useTranslation } from 'react-i18next';
+import { MinusOutlined } from '@ant-design/icons';
 import './index.css';
 
 const tp = require('tp-js-sdk')
@@ -279,8 +280,6 @@ export default function Home({ }) {
             <div className=" main">
                 <div className="home">
                     <div className='card card-shadow-gray' style={{
-                        background: "#fff",
-                        color: "#000",
                         marginTop: "20px"
                     }}>
                         <Row >
@@ -288,7 +287,8 @@ export default function Home({ }) {
                                 <p style={{
                                     lineHeight: "35px",
                                     fontSize: "16px",
-                                    fontWeight: "bold"
+                                    fontWeight: "bold",
+                                    color: "#F2FA5A"
                                 }}>
                                     {
                                         account ? <span>
@@ -333,15 +333,15 @@ export default function Home({ }) {
                             <Col flex={"50px"}>{t("Amount")}:</Col>
                             <Col>
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
                                 }} value={fromValue(balance0)} precision={2} />
                             </Col>
-                            <Col flex={"20px"} style={{ textAlign: "center"}}>+</Col>
+                            <Col flex={"20px"} style={{ textAlign: "center" }}>+</Col>
                             <Col >
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
                                 }} value={fromValue(balance1)} precision={2} />
@@ -352,10 +352,14 @@ export default function Home({ }) {
                                 textAlign: "center",
                                 paddingBottom: "10px",
                             }}>
-                                <Rate disabled defaultValue={Number(vip)} />
+                                <Rate disabled style={{
+                                    color: "#F2FA5A"
+                                }} defaultValue={Number(vip)} />
                             </Col>
                         </Row>
-                        <Row className='textcenter'>
+                        <Row className='textcenter' style={{
+                            marginTop:"12px"
+                        }}>
                             <Modal title={`${t("Recharge")}`}
                                 open={rechargeModal}
                                 onCancel={() => {
@@ -370,10 +374,10 @@ export default function Home({ }) {
                                         </Col>
                                         <Col flex={"auto"}>
                                             {
-                                                isInviter ? <Input value={inviter} disabled /> : <div style={{
+                                                isInviter ? <input className='ipt' value={inviter} disabled /> : <div style={{
                                                     display: "flex"
                                                 }}>
-                                                    <Input value={inviter} onChange={(e) => {
+                                                    <input className='ipt' value={inviter} onChange={(e) => {
                                                         setInviter(e.target.value)
                                                     }} />
 
@@ -395,11 +399,11 @@ export default function Home({ }) {
                                             <div style={{
                                                 display: "flex"
                                             }}>
-                                                <Input value={userAddr} onChange={(e) => {
+                                                <input className='ipt' value={userAddr} onChange={(e) => {
                                                     setUserAddr(e.target.value)
                                                 }} />
                                                 <img src={iconScanCode} onClick={() => {
-                                                    tp.invokeQRScanner().then((res: any) => {  setUserAddr(res) })
+                                                    tp.invokeQRScanner().then((res: any) => { setUserAddr(res) })
                                                 }} alt="" />
                                             </div>
 
@@ -410,7 +414,7 @@ export default function Home({ }) {
                                             <p>{t("Rechargeamount")}:</p>
                                         </Col>
                                         <Col flex={"auto"}>
-                                            <Input value={rechargeAmount} onChange={(e) => {
+                                            <input className='ipt' value={rechargeAmount} onChange={(e) => {
                                                 let value = e.target.value;
                                                 setRechargeAmount(verify(value));
                                             }} />
@@ -418,20 +422,26 @@ export default function Home({ }) {
                                     </Row>
 
                                     <Row className='textcenter' style={{
-                                        marginTop: "10px"
+                                        marginTop: "20px"
                                     }}>
                                         <Col flex={1}>
-                                            <Button type="primary" onClick={() => {
-                                                closeModal()
-                                            }}>{t("Cancel")}</Button>
+                                            <p className='btn'>
+                                                <span onClick={() => {
+                                                    closeModal();
+                                                }}>{t("Cancel")}</span>
+                                            </p>
                                         </Col>
                                         <Col flex={1}>
                                             {
-                                                isApprove ? <Button type="primary" onClick={() => {
-                                                    sendDeposit()
-                                                }}>{t("Recharge")}</Button> : <Button type="primary" onClick={() => {
-                                                    sendApprove()
-                                                }}>{t("Approve")}</Button>
+                                                isApprove ? <p className='btn'>
+                                                    <span onClick={() => {
+                                                        sendDeposit()
+                                                    }}>{t("Recharge")}</span>
+                                                </p> : <p className='btn'>
+                                                    <span onClick={() => {
+                                                        sendApprove()
+                                                    }}>{t("Approve")}</span>
+                                                </p>
                                             }
                                         </Col>
                                     </Row>
@@ -439,15 +449,22 @@ export default function Home({ }) {
                             </Modal>
 
                             <Col flex={1}>
-                                <Button type="primary" onClick={() => {
-                                    setRechargeModal(true);
-                                }}>{t("Recharge")}</Button>
+                                <p className='btn'>
+                                    <span onClick={() => {
+                                        setRechargeModal(true);
+                                    }}>{t("Recharge")}</span>
+                                </p>
                             </Col>
                             <Col flex={1}>
                                 {
-                                    new BigNumber(balance0).plus(balance1).isGreaterThan(0) ? <Button type="primary" onClick={() => {
-                                        sendSettle()
-                                    }}> {t("withdraw")}</Button> : <Button type="primary" disabled>{t("withdraw")}</Button>
+                                    new BigNumber(balance0).plus(balance1).isGreaterThan(0) ?
+                                        <p className='btn'>
+                                            <span onClick={() => {
+                                                sendSettle();
+                                            }}>{t("withdraw")}</span>
+                                        </p> : <p className='btned'>
+                                            <span >{t("withdraw")}</span>
+                                        </p>
                                 }
                             </Col>
                         </Row>
@@ -456,46 +473,49 @@ export default function Home({ }) {
                     <div className='card card-shadow-gray'>
                         <Row>
                             <Col span={24} className='card-box'>
-                                <img src={iconRecharge1} alt="" />
                                 <p>
-                                    {t("achievement")}
+                                    —— {t("achievement")}  ——
                                 </p>
                             </Col>
                         </Row>
-                        <Row className='textcenter'>
-                            <Col flex={1}>
+                        <Row className='textcenter box' style={{
+                            borderBottom:"1px dashed #F2FA5A",
+                            marginBottom:"15px",
+                            paddingBottom:"15px"
+                        }}>
+                            <Col className='boxitem'>
                                 <p> {t("shouldbereturned")}</p>
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
                                 }} value={fromValue(totalAmount)} precision={2} />
                             </Col>
-                            <Col flex={1}>
+                            <Col className='boxitem'>
                                 <p> {t("returned")}</p>
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
                                 }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed())} precision={2} />
                             </Col>
                         </Row>
-                        <Row className='textcenter'>
-                            <Col flex={1}>
+                        <Row className='textcenter box' >
+                            <Col className='boxitem'>
                                 <p> {t("Regionalperformance")}</p>
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
                                 }} value={fromValue(new BigNumber(new BigNumber(maxScore).plus(selfScore).toString()).toFixed())} precision={2} />
                             </Col>
-                            <Col flex={1}>
+                            <Col className='boxitem'>
                                 <p>{t("Otherachievements")}</p>
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }}  value={fromValue(new BigNumber(score).toFixed())} precision={2} />
+                                }} value={fromValue(new BigNumber(score).toFixed())} precision={2} />
                             </Col>
                         </Row>
                     </div>
@@ -504,9 +524,8 @@ export default function Home({ }) {
                     <div className='card card-shadow-gray'>
                         <Row>
                             <Col span={24} className='card-box'>
-                                <img src={iconRecharge} alt="" />
                                 <p>
-                                    {t("income")}
+                                    ——{t("income")} ——
                                 </p>
                             </Col>
                         </Row>
@@ -516,7 +535,7 @@ export default function Home({ }) {
                             </Col>
                             <Col flex={"auto"}>
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
@@ -530,7 +549,7 @@ export default function Home({ }) {
                             </Col>
                             <Col flex={"auto"}>
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
@@ -543,7 +562,7 @@ export default function Home({ }) {
                             </Col>
                             <Col flex={"auto"}>
                                 <Statistic valueStyle={{
-                                    color: '#f28703',
+                                    color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
