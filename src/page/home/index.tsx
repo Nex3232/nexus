@@ -37,6 +37,7 @@ export default function Home({ }) {
     const [balance1, setBalance1] = useState<string>('0');
     const [totalAmount, setTotalAmount] = useState<string>('0');
     const [returnedAmount, setReturnedAmount] = useState<string>('0');
+    const [tokenAmount, setTokenAmount] = useState<string>('0');
     const [inviteProfit, setInviteProfit] = useState<string>('0');
     const [vip, setVip] = useState<string>('0');
     const [vipProfit, setVipProfit] = useState<string>('0');
@@ -106,6 +107,7 @@ export default function Home({ }) {
                 setInviter(res.inviter)
                 setIsInviter(true)
             }
+            setTokenAmount(res.tokenAmount.toString())
             setVip(res.vip.toString())
             setScore(res.score.toString())
             setTotalAmount(res.totalAmount.toString())
@@ -345,6 +347,17 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400"
                                 }} value={fromValue(balance1)} precision={2} />
+                            </Col>
+                        </Row>
+
+                        <Row className='texthight'>
+                            <Col >{t("tokenAmount")}:</Col>
+                            <Col flex={1}>
+                                <Statistic valueStyle={{
+                                    color: '#F2FA5A',
+                                    fontSize: "22px",
+                                    fontWeight: "400"
+                                }} value={fromValue(tokenAmount)} precision={2} />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
