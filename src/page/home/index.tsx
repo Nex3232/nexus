@@ -357,7 +357,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(tokenAmount)} precision={2} />
+                                }} value={fromValue(tokenAmount)} precision={2} suffix={"RDX"} />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -371,7 +371,7 @@ export default function Home({ }) {
                             </Col>
                         </Row>
                         <Row className='textcenter' style={{
-                            marginTop:"12px"
+                            marginTop: "12px"
                         }}>
                             <Modal title={`${t("Recharge")}`}
                                 open={rechargeModal}
@@ -492,9 +492,9 @@ export default function Home({ }) {
                             </Col>
                         </Row>
                         <Row className='textcenter box' style={{
-                            borderBottom:"1px dashed #F2FA5A",
-                            marginBottom:"15px",
-                            paddingBottom:"15px"
+                            borderBottom: "1px dashed #F2FA5A",
+                            marginBottom: "15px",
+                            paddingBottom: "15px"
                         }}>
                             <Col className='boxitem'>
                                 <p> {t("shouldbereturned")}</p>
