@@ -1,7 +1,7 @@
 import { InjectedConnector } from '@web3-react/injected-connector'
 
 export const injected = new InjectedConnector({
-    supportedChainIds: [1, 3, 10, 11, 42, 15, 97, 56],
+    supportedChainIds: [1, 3, 10, 11, 42, 15, 97, 56, 223344],
 })
 
 export const enum SUPPORT_CHAINIDS {
@@ -13,6 +13,7 @@ export const enum SUPPORT_CHAINIDS {
     DEV = 15,
     BSC_TEST = 97,
     BSC_MAINNET = 56,
+    Net = 223344
 };
 
 export const MAX_UNIT256 = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';

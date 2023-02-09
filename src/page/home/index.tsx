@@ -49,21 +49,9 @@ export default function Home({ }) {
     const [isInviter, setIsInviter] = useState<boolean>(false);
     const [userAddr, setUserAddr] = useState<string>('');
     const [rechargeAmount, setRechargeAmount] = useState<string>('');
+    const [rechargeBackAmount, setRechargeBackAmount] = useState<string>('');
     const [rechargeModal, setRechargeModal] = useState<boolean>(false);
     const [codeModal, setCodeModal] = useState<boolean>(false);
-
-    useEffect(() => {
-        getAccounts()
-    })
-
-    const getAccounts = async () => {
-        if (typeof ethereum !== 'undefined') {
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            console.log("getAccounts", accounts)
-        } else {
-            // tell the user to install an `ethereum` provider extension
-        }
-    }
 
     useEffect(() => {
         getAllowance()
@@ -261,11 +249,13 @@ export default function Home({ }) {
                     nativeCurrency: {
                         name: process.env.REACT_APP_NET_SYMBOL,
                         symbol: process.env.REACT_APP_NET_SYMBOL,
-                        decimals: process.env.REACT_APP_NET_DECIMALS
+                        decimals: Number(process.env.REACT_APP_NET_DECIMALS)
                     },
                     rpcUrls: [process.env.REACT_APP_NET_URL],
-                    blockExplorerUrls: [process.env.REACT_APP_NET_SCAN]
+                    // blockExplorerUrls: [process.env.REACT_APP_NET_SCAN]
                 }];
+
+                console.log("params",params)
                 window.ethereum.request({ method: 'wallet_addEthereumChain', params })
                     .then(() => {
                         if (window.ethereum) {
@@ -275,6 +265,18 @@ export default function Home({ }) {
                         }
                     }).catch((error: Error) => console.log("Error", error.message))
             })
+    }
+
+
+    const getPrice = (value: any) => {
+        // quote
+        faceContract?.quote(toValue(value)).then((res: any) => {
+            console.log("get Price", res)
+            setRechargeBackAmount(res.toString())
+        }).catch((err: any) => {
+            console.log("get Price", err)
+        })
+
     }
 
     return (
@@ -424,12 +426,20 @@ export default function Home({ }) {
                                     </Row>
                                     <Row className='texthight'>
                                         <Col span={24}>
-                                            <p>{t("Rechargeamount")}:</p>
+                                            <p>{t("Rechargeamount")}:
+                                                {
+                                                    rechargeAmount != "" && !new BigNumber(rechargeAmount).isZero() ? <> {rechargeAmount} USDT ≈  {fromValue(rechargeBackAmount)} DRX</> : <></>
+                                                }
+                                            </p>
                                         </Col>
                                         <Col flex={"auto"}>
                                             <input className='ipt' value={rechargeAmount} onChange={(e) => {
-                                                let value = e.target.value;
-                                                setRechargeAmount(verify(value));
+                                                let value = verify(e.target.value);
+                                                if (value != "" && !new BigNumber(value).isZero()) {
+                                                    console.log(value);
+                                                    getPrice(value)
+                                                }
+                                                setRechargeAmount(value);
                                             }} />
                                         </Col>
                                     </Row>
