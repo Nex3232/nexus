@@ -276,7 +276,6 @@ export default function Home({ }) {
         }).catch((err: any) => {
             console.log("get Price", err)
         })
-
     }
 
     return (
