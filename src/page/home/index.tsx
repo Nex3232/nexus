@@ -358,7 +358,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(tokenAmount)} precision={2} suffix={"RDX"} />
+                                }} value={fromValue(tokenAmount)} precision={2} suffix={"DRX"} />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
