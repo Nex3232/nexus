@@ -358,7 +358,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(tokenAmount)} precision={2} suffix={"DRX"} />
+                                }} value={fromValue(tokenAmount)} precision={2} suffix={"RDX"} />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -427,7 +427,7 @@ export default function Home({ }) {
                                         <Col span={24}>
                                             <p>{t("Rechargeamount")}:
                                                 {
-                                                    rechargeAmount != "" && !new BigNumber(rechargeAmount).isZero() ? <> {rechargeAmount} USDT ≈  {fromValue(rechargeBackAmount)} DRX</> : <></>
+                                                    rechargeAmount != "" && !new BigNumber(rechargeAmount).isZero() ? <> {rechargeAmount} USDT ≈  {fromValue(rechargeBackAmount)} RDX</> : <></>
                                                 }
                                             </p>
                                         </Col>
