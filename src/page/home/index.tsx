@@ -47,7 +47,7 @@ export default function Home({ }) {
     const [selfScore, setSelfScore] = useState<string>('0');
     const [inviter, setInviter] = useState<string>('');
     const [isInviter, setIsInviter] = useState<boolean>(false);
-    const [userAddr, setUserAddr] = useState<string>('');
+    const [userAddr, setUserAddr] = useState<string>("");
     const [rechargeAmount, setRechargeAmount] = useState<string>('');
     const [rechargeBackAmount, setRechargeBackAmount] = useState<string>('');
     const [rechargeModal, setRechargeModal] = useState<boolean>(false);
@@ -56,11 +56,14 @@ export default function Home({ }) {
     useEffect(() => {
         getAllowance()
         init();
-    })
+    },[account])
 
     const init = () => {
         getUsers();
         getBalanceOf();
+        if(account){
+            setUserAddr(account)
+        }
     }
 
     const getAllowance = () => {
@@ -126,6 +129,7 @@ export default function Home({ }) {
     }
 
     const sendDeposit = () => {
+        console.log("sendDeposit",userAddr)
         if (!isAddress(inviter) || inviter === AddressZero) {
             message.error(`${t("correctAddress")}`)
             return
@@ -228,7 +232,7 @@ export default function Home({ }) {
     }
 
     const closeModal = () => {
-        setUserAddr("");
+        // setUserAddr("");
         setRechargeAmount('');
         setRechargeModal(false);
     }
@@ -405,7 +409,7 @@ export default function Home({ }) {
                                         </Col>
                                     </Row>
 
-                                    <Row className='texthight'>
+                                    {/* <Row className='texthight'>
                                         <Col span={24}>
                                             <p> {t("useraddress")}:</p>
                                         </Col>
@@ -422,7 +426,7 @@ export default function Home({ }) {
                                             </div>
 
                                         </Col>
-                                    </Row>
+                                    </Row> */}
                                     <Row className='texthight'>
                                         <Col span={24}>
                                             <p>{t("Rechargeamount")}:
