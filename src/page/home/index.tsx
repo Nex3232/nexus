@@ -47,7 +47,7 @@ export default function Home({ }) {
     const [selfScore, setSelfScore] = useState<string>('0');
     const [inviter, setInviter] = useState<string>('');
     const [isInviter, setIsInviter] = useState<boolean>(false);
-    const [userAddr, setUserAddr] = useState<string>("");
+    // const [userAddr, setUserAddr] = useState<string>("");
     const [rechargeAmount, setRechargeAmount] = useState<string>('');
     const [rechargeBackAmount, setRechargeBackAmount] = useState<string>('');
     const [rechargeModal, setRechargeModal] = useState<boolean>(false);
@@ -56,14 +56,11 @@ export default function Home({ }) {
     useEffect(() => {
         getAllowance()
         init();
-    },[account])
+    }, [account])
 
     const init = () => {
         getUsers();
         getBalanceOf();
-        if(account){
-            setUserAddr(account)
-        }
     }
 
     const getAllowance = () => {
@@ -129,22 +126,23 @@ export default function Home({ }) {
     }
 
     const sendDeposit = () => {
-        console.log("sendDeposit",userAddr)
         if (!isAddress(inviter) || inviter === AddressZero) {
             message.error(`${t("correctAddress")}`)
             return
         }
 
-        if (!isAddress(userAddr) || userAddr === AddressZero) {
-            message.error(`${t("correctAddress")}`)
-            return
-        }
+        // if (!isAddress(userAddr) || userAddr === AddressZero) {
+        //     message.error(`${t("correctAddress")}`)
+        //     return
+        // }
 
         let tokenValue = toValue(rechargeAmount);
 
         loadingStore.changeLoad(`${t("Loading")}`, true, "loading");
-        faceContract?.estimateGas.deposit(inviter, userAddr, tokenValue, { from: account }).then((gas: any) => {
-            faceContract?.deposit(inviter, userAddr, tokenValue, { from: account, gasLimit: gas.mul(120).div(100) })
+        // faceContract?.estimateGas.deposit(inviter, userAddr, tokenValue, { from: account }).then((gas: any) => {
+        //     faceContract?.deposit(inviter, userAddr, tokenValue, { from: account, gasLimit: gas.mul(120).div(100) })
+        faceContract?.estimateGas.deposit(inviter, account, tokenValue, { from: account }).then((gas: any) => {
+            faceContract?.deposit(inviter, account, tokenValue, { from: account, gasLimit: gas.mul(120).div(100) })
                 .then((response: any) => {
                     if (response && response.hash) {
                         TransactionReceipt(response.hash, 0)
@@ -259,7 +257,7 @@ export default function Home({ }) {
                     // blockExplorerUrls: [process.env.REACT_APP_NET_SCAN]
                 }];
 
-                console.log("params",params)
+                console.log("params", params)
                 window.ethereum.request({ method: 'wallet_addEthereumChain', params })
                     .then(() => {
                         if (window.ethereum) {

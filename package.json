@@ -41,6 +41,8 @@
   "scripts": {
     "start:dev": "dotenv -e .env.dev react-app-rewired start",
     "build:dev": "dotenv -e .env.dev react-app-rewired build",
+    "start:polygon": "dotenv -e .env.polygon react-app-rewired start",
+    "build:polygon": "dotenv -e .env.polygon react-app-rewired build",
     "start:testdev": "dotenv -e .env.testdev react-app-rewired start",
     "build:testdev": "dotenv -e .env.testdev react-app-rewired build",
     "start:prod": "dotenv -e .env.prod react-app-rewired start",
