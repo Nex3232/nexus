@@ -32,7 +32,7 @@ export function formatString(value: any, len: number) {
 }
 
 export const fromValue = (value: any) => {
-    return new BigNumber(value).dividedBy(10 ** 18).toFixed();
+    return new BigNumber(value).dividedBy(10 ** 18).toFixed(6);
 }
 
 export const toValue = (value: any) => {
