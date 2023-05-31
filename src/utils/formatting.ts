@@ -1,4 +1,15 @@
+import { Contract } from "@ethersproject/contracts";
 import BigNumber from "bignumber.js";
+import ERC20ABI from '../abis/erc20.json'
+import { useWeb3React } from "@web3-react/core";
+import { getProviderOrSigner, useERC20 } from "../hooks/useContract";
+import { useCallback, useMemo } from "react";
+import { ethers } from "ethers"
+declare const window: any
+
+const USDTADDR = process.env.REACT_APP_TOKEN_USDT + "";
+const abi: any = ERC20ABI;
+
 export const verify = (value: any) => {
     let str = value;
     let len1 = str.substr(0, 1);
@@ -31,10 +42,14 @@ export function formatString(value: any, len: number) {
     return value.slice(0, len) + "..." + value.slice(-len)
 }
 
-export const fromValue = (value: any) => {
-    return new BigNumber(value).dividedBy(10 ** 18).toFixed(6);
+export const fromValue = (value: any,decimals:any) => {
+    return new BigNumber(value).dividedBy(10 ** decimals).toFixed(6);
 }
 
-export const toValue = (value: any) => {
-    return new BigNumber(value).multipliedBy(10 ** 18).toFixed();
+export const toValue = (value: any,decimals:any) => {
+    return new BigNumber(value).multipliedBy(10 ** decimals).toFixed();
 }
+
+
+
+

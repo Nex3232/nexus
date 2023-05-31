@@ -53,6 +53,11 @@ export default function Home({ }) {
     const [rechargeModal, setRechargeModal] = useState<boolean>(false);
     const [codeModal, setCodeModal] = useState<boolean>(false);
 
+
+    const [decimalsU, setDecimalsU] = useState<number>(0);
+    const [decimalsToken, setDecimalsToken] = useState<number>(0);
+
+
     useEffect(() => {
         getAllowance()
         init();
@@ -61,7 +66,21 @@ export default function Home({ }) {
     const init = () => {
         getUsers();
         getBalanceOf();
+        getDecimals()
     }
+    const getDecimals = () => {
+        tokenContract?.decimals().then(function (decimals: any) {
+            console.log(decimals, "TokenBalance")
+            setDecimalsToken(Number(decimals.toString()));
+        });
+
+        usdtContract?.decimals().then(function (decimals: any) {
+            console.log(decimals, "TokenBalance")
+            setDecimalsU(Number(decimals.toString()));
+        });
+    }
+
+
 
     const getAllowance = () => {
         tokenContract?.allowance(account, CONTRACTADDR).then((res: any) => {
@@ -136,7 +155,7 @@ export default function Home({ }) {
         //     return
         // }
 
-        let tokenValue = toValue(rechargeAmount);
+        let tokenValue = toValue(rechargeAmount,decimalsU);
 
         loadingStore.changeLoad(`${t("Loading")}`, true, "loading");
         // faceContract?.estimateGas.deposit(inviter, userAddr, tokenValue, { from: account }).then((gas: any) => {
@@ -270,16 +289,12 @@ export default function Home({ }) {
     }
 
 
-    const getPrice = (value: any) => {
+    const getPrice = async (value: any) => {
         // quote
-        faceContract?.quote(toValue(value)).then((res: any) => {
-            console.log("get Price", res)
-            setRechargeBackAmount(res.toString())
-        }).catch((err: any) => {
-            console.log("get Price", err)
-        })
+        let data = await faceContract?.quote(toValue(value,decimalsU))
+        console.log("getPrice", data, data.toString())
+        setRechargeBackAmount(data.toString())
     }
-
     return (
         <div className='mainContent'>
             <div className=" main">
@@ -341,7 +356,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(balance0)} precision={2} />
+                                }} value={fromValue(balance0,decimalsU)} precision={2} />
                             </Col>
                             <Col flex={"20px"} style={{ textAlign: "center" }}>+</Col>
                             <Col >
@@ -349,7 +364,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(balance1)} precision={2} />
+                                }} value={fromValue(balance1,decimalsToken)} precision={2} />
                             </Col>
                         </Row>
 
@@ -360,7 +375,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(tokenAmount)} precision={2} suffix={"RDX"} />
+                                }} value={fromValue(tokenAmount,decimalsToken)} precision={2} suffix={"RDX"} />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -429,7 +444,7 @@ export default function Home({ }) {
                                         <Col span={24}>
                                             <p>{t("Rechargeamount")}:
                                                 {
-                                                    rechargeAmount != "" && !new BigNumber(rechargeAmount).isZero() ? <> {rechargeAmount} USDT ≈  {fromValue(rechargeBackAmount)} RDX</> : <></>
+                                                    rechargeAmount != "" && !new BigNumber(rechargeAmount).isZero() ? <> {rechargeAmount} USDT ≈  {fromValue(rechargeBackAmount,decimalsToken)} RDX</> : <></>
                                                 }
                                             </p>
                                         </Col>
@@ -513,7 +528,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(totalAmount)} precision={2} />
+                                }} value={fromValue(totalAmount,decimalsU)} precision={2} />
                             </Col>
                             <Col className='boxitem'>
                                 <p> {t("returned")}</p>
@@ -521,7 +536,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed())} precision={2} />
+                                }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed(),decimalsU)} precision={2} />
                             </Col>
                         </Row>
                         <Row className='textcenter box' >
@@ -531,7 +546,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(new BigNumber(maxScore).plus(selfScore).toString()).toFixed())} precision={2} />
+                                }} value={fromValue(new BigNumber(new BigNumber(maxScore).plus(selfScore).toString()).toFixed(),decimalsU)} precision={2} />
                             </Col>
                             <Col className='boxitem'>
                                 <p>{t("Otherachievements")}</p>
@@ -539,7 +554,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(score).toFixed())} precision={2} />
+                                }} value={fromValue(new BigNumber(score).toFixed(),decimalsU)} precision={2} />
                             </Col>
                         </Row>
                     </div>
@@ -563,7 +578,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed())} precision={2} />
+                                }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed(),decimalsU)} precision={2} />
 
                             </Col>
                         </Row>
@@ -577,7 +592,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(inviteProfit)} precision={2} />
+                                }} value={fromValue(inviteProfit,decimalsU)} precision={2} />
                             </Col>
                         </Row>
                         <Row className='texthight'>
@@ -590,7 +605,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(vipProfit).plus(balance1).toFixed())} precision={2} />
+                                }} value={fromValue(new BigNumber(vipProfit).plus(balance1).toFixed(),decimalsU)} precision={2} />
                             </Col>
                         </Row>
                     </div>

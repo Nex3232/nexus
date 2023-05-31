@@ -20,7 +20,7 @@ function getSigner(library: Web3Provider, account: string): JsonRpcSigner {
     return library.getSigner(account).connectUnchecked()
 }
 
-function getProviderOrSigner(library: Web3Provider, account?: string): Web3Provider | JsonRpcSigner {
+export function getProviderOrSigner(library: Web3Provider, account?: string): Web3Provider | JsonRpcSigner {
     return account ? getSigner(library, account) : library
 }
 
