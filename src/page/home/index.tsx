@@ -356,7 +356,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(balance0,decimalsU)} precision={2} />
+                                }} suffix="U" value={fromValue(balance0,decimalsU)} precision={2} />
                             </Col>
                             <Col flex={"20px"} style={{ textAlign: "center" }}>+</Col>
                             <Col >
@@ -364,7 +364,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(balance1,decimalsToken)} precision={2} />
+                                }} suffix="U" value={fromValue(balance1,decimalsU)} precision={2} />
                             </Col>
                         </Row>
 
@@ -528,7 +528,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(totalAmount,decimalsU)} precision={2} />
+                                }} suffix="U" value={fromValue(totalAmount,decimalsU)} precision={2} />
                             </Col>
                             <Col className='boxitem'>
                                 <p> {t("returned")}</p>
@@ -536,7 +536,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed(),decimalsU)} precision={2} />
+                                }} suffix="U" value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed(),decimalsU)} precision={2} />
                             </Col>
                         </Row>
                         <Row className='textcenter box' >
@@ -546,7 +546,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(new BigNumber(maxScore).plus(selfScore).toString()).toFixed(),decimalsU)} precision={2} />
+                                }} suffix="U" value={fromValue(new BigNumber(new BigNumber(maxScore).plus(selfScore).toString()).toFixed(),decimalsU)} precision={2} />
                             </Col>
                             <Col className='boxitem'>
                                 <p>{t("Otherachievements")}</p>
@@ -554,7 +554,7 @@ export default function Home({ }) {
                                     color: '#F2FA5A',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(score).toFixed(),decimalsU)} precision={2} />
+                                }} suffix="U" value={fromValue(new BigNumber(score).toFixed(),decimalsU)} precision={2} />
                             </Col>
                         </Row>
                     </div>
@@ -578,7 +578,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed(),decimalsU)} precision={2} />
+                                }} suffix="U" value={fromValue(new BigNumber(returnedAmount).plus(balance0).toFixed(),decimalsU)} precision={2} />
 
                             </Col>
                         </Row>
@@ -592,7 +592,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(inviteProfit,decimalsU)} precision={2} />
+                                }} suffix="U" value={fromValue(inviteProfit,decimalsU)} precision={2} />
                             </Col>
                         </Row>
                         <Row className='texthight'>
@@ -605,7 +605,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(vipProfit).plus(balance1).toFixed(),decimalsU)} precision={2} />
+                                }} suffix="U" value={fromValue(new BigNumber(vipProfit).plus(balance1).toFixed(),decimalsU)} precision={2} />
                             </Col>
                         </Row>
                     </div>
